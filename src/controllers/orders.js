@@ -115,7 +115,14 @@ module.exports = {
           error: err.message,
           response: err.errors
         });
-        res.status(500).send(utils.sanitizeMongooseError(err));
+
+        if (err.message.indexOf('customer does not exist') !== -1) {
+          res.status(400).send({ error: err.message });
+        } else if (err.message.indexOf('duplicate key error') !== -1) {
+          res.status(409).send({ error: `The following orderId already exists: ${data._id}` });
+        } else {
+          res.status(500).send({ error: utils.sanitizeMongooseError(err) });
+        }
       });
   },
 
