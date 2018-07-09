@@ -25,7 +25,7 @@ app.use(compression());
 
 app.disable('x-powered-by');
 
-app.listen(process.env.PORT, err => {
+app.listen(process.env.SERVICE_PORT, err => {
   if (err) {
     console.error(err);
     process.exit(1);
