@@ -3,9 +3,10 @@ const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').load();
 
 const dirRoutes = path.join(__dirname, 'routes');
+
+const PORT = 5000;
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.use(compression());
 
 app.disable('x-powered-by');
 
-app.listen(process.env.SERVICE_PORT, err => {
+app.listen(PORT, err => {
   if (err) {
     console.error(err);
     process.exit(1);
@@ -38,11 +39,9 @@ app.listen(process.env.SERVICE_PORT, err => {
     app.use('/api', require(route));
   });
 
-  const serviceName = process.env.SERVICE_NAME;
-  const port = process.env.SERVICE_PORT;
-  const env = process.env.NODE_ENV;
+  const env = process.env.NODE_ENV || 'dev';
 
-  console.log(`"${serviceName}" listening on port ${port} on "${env}"`);
+  console.log(`"borderguru-order-api" listening on port ${PORT} on "${env}"`);
 });
 
 module.exports = app;
