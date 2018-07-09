@@ -1191,6 +1191,10 @@ mongodb@^2.0.36:
     mongodb-core "2.1.19"
     readable-stream "2.2.7"
 
+mongoose-delete@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/mongoose-delete/-/mongoose-delete-0.4.0.tgz#6eeeed56d8b478cf09ae02b5894d11380056be4a"
+
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
