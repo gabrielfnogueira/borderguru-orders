@@ -1,4 +1,5 @@
 const Customers = require('../models/customer');
+const Orders = require('../models/order');
 const utils = require('../utils/utils');
 
 module.exports = {
@@ -48,6 +49,58 @@ module.exports = {
           response: err.errors
         });
         res.status(422).send(utils.sanitizeMongooseError(err));
+      });
+  },
+
+  getPaidAmount: (req, res) => {
+    const query = { customer: req.params.customerId };
+
+    Orders.apiQuery(query)
+      .select('_id customer price currency')
+      .then(orders => {
+        const amounts = orders.reduce((amount, order) => {
+          amount[order.currency] = amount[order.currency] + order.price || order.price;
+
+          return amount;
+        }, {});
+
+        res.json(Object.keys(amounts).map(currency => ({ currency: currency, totalAmount: amounts[currency] })));
+      })
+      .catch(err => {
+        console.error({
+          msg: 'api/orders get request failed',
+          error: err.message,
+          response: err.errors
+        });
+        res.status(422).send(err.message);
+      });
+  },
+
+  getBoughtItem: (req, res) => {
+    const query = { itemName: req.params.itemName };
+
+    Orders.apiQuery(query)
+      .select('_id customer')
+      .populate('customer')
+      .then(orders => {
+        res.json(
+          orders.map(order => {
+            return {
+              orderId: order._id,
+              customerId: order.customer._id,
+              customerName: order.customer.name,
+              customerAddress: order.customer.address
+            };
+          })
+        );
+      })
+      .catch(err => {
+        console.error({
+          msg: 'api/orders get request failed',
+          error: err.message,
+          response: err.errors
+        });
+        res.status(422).send(err.message);
       });
   },
 

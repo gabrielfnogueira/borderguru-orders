@@ -110,7 +110,7 @@ module.exports = {
         res.json(order);
       })
       .catch(err => {
-        logger.error({
+        console.error({
           msg: 'api/orders post request failed',
           error: err.message,
           response: err.errors
