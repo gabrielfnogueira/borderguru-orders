@@ -22,7 +22,7 @@ To create and seed the database, run
 
 `make db-restore`
 
-To run the tests, run
+To run the tests, run (make sure you run `make db-restore` before the tests)
 
 `make tests`
 
