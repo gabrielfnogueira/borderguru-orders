@@ -12,6 +12,6 @@ services:
     container_name: mongo
     image: mongo:3.6
     volumes:
-      - ./data:/data/db
+      - ./db:/data/files
     ports:
       - "27017:27017"
